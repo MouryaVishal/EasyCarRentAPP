@@ -13,6 +13,5 @@ public class CarRequest {
     private String name;
     private Double pricePerDay;
     private String  carCategoryName;
-    private Boolean isAvailable;
     private int countOfThatCar;
 }

@@ -42,8 +42,8 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         String customerEmail=request.getCustomerEmail();
 
         // Fetch customer
-        Optional<Customer> currCustomer=customerRepository.findByName(customerName);
-
+        Optional<Customer> currCustomer=customerRepository.findByNameAndEmail(customerName,customerEmail);
+//        System.out.println(currCustomer.get());
         if(currCustomer.isEmpty() || !Objects.equals(currCustomer.get().getEmail(), customerEmail)){
             return new ResponseEntity<>("Sorry! Customer not found...",HttpStatus.NOT_FOUND);
         }

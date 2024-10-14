@@ -51,6 +51,7 @@ public class CategoryService implements CategoryServiceInterface {
                 return new ResponseEntity<>(categoryName+" is already present in the space...",HttpStatus.NOT_FOUND);
             }
             optionalCategory.get().setCategoryName(categoryName);
+            categoryRepository.save(optionalCategory.get());
             return new ResponseEntity<>(optionalCategory, HttpStatus.OK);
         } else {
             throw new CategoryNotFoundException();

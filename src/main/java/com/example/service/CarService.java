@@ -25,7 +25,7 @@ public class CarService implements CarServiceInterface {
         String name= request.getName();
         Double pricePerDay= request.getPricePerDay();
         String  carCategoryName= request.getCarCategoryName();
-        Boolean isAvailable=request.getIsAvailable();
+//        Boolean isAvailable=request.getIsAvailable();
         int countOfThatCar= request.getCountOfThatCar();
         Optional<Car> car=carRepository.findByName((name));
         if(car.isEmpty()){
