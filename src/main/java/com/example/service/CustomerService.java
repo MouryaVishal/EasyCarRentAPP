@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.Objects;
 import java.util.Optional;
 
+
+//! All operation related to customer service is done
 @Service
 public class CustomerService implements CustomerServiceInterface {
     @Autowired
     private CustomerRepository customerRepository;
+
+//    *Adding customer in DB by providing CustomerResquestToRegister object
     public ResponseEntity<Object> addCustomer(CustomerResquestToRegister customer){
         Optional<Customer> currCustomer=customerRepository.findByName(customer.getName());
         if(currCustomer.isPresent() && Objects.equals(currCustomer.get().getName(), customer.getName())
@@ -32,10 +36,12 @@ public class CustomerService implements CustomerServiceInterface {
         return new ResponseEntity<>(newCustomer,HttpStatus.OK);
     }
 
+//    *Fetching all Customer from the DB
     public Iterable<Customer> allCustomer(){
         return customerRepository.findAll();
     }
 
+//    * Deleting customer from DB by providing customer ID:
     public String deleteById(Long id){
         if(customerRepository.existsById(id)) {
             customerRepository.deleteById(id);
@@ -44,6 +50,7 @@ public class CustomerService implements CustomerServiceInterface {
         return "Delete Fail. No Such id found!!";
     }
 
+//    * Updating customer Details in DB by providing its ID and CustomerResquestToRegister
     public ResponseEntity<Object> updateById(Long id, CustomerResquestToRegister customer) {
         Optional<Customer> updateCustomer = customerRepository.findById(id);
         if (updateCustomer.isPresent()) {

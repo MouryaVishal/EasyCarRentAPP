@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
+//! All operation related to car service is done
 @Service
 public class CarService implements CarServiceInterface {
     @Autowired
@@ -21,6 +23,7 @@ public class CarService implements CarServiceInterface {
     @Autowired
     private CategoryRepository categoryRepository;
 
+//    * adding new car in Space by providing carRequest Object;
     public ResponseEntity<Object> addCar(CarRequest request){
         String name= request.getName();
         Double pricePerDay= request.getPricePerDay();
@@ -47,6 +50,7 @@ public class CarService implements CarServiceInterface {
                 carCategoryName+" is already present...",HttpStatus.NOT_FOUND);
     }
 
+//    *increasing count of particular car in space by providing car Id and number of instance to increase
     public ResponseEntity<Object> increseCountOfCar(Long id,int byNum){
         Optional<Car> car=carRepository.findById(id);
         if(car.isEmpty()){
@@ -58,6 +62,7 @@ public class CarService implements CarServiceInterface {
         return new ResponseEntity<>(car.get(),HttpStatus.OK);
     }
 
+//    *increasing count of particular car in space by providing car name and number of instance to increase
     public ResponseEntity<Object> increseCountOfCarByName(String name,int byNum){
         Optional<Car> car=carRepository.findByName(name);
 
@@ -70,10 +75,13 @@ public class CarService implements CarServiceInterface {
         return new ResponseEntity<>(car.get(),HttpStatus.OK);
     }
 
+//    * fetching all cars in space
     public Iterable<Car> allcars(){
         return carRepository.findAll();
     }
 
+
+//* Deleting a car from space
     public String deleteById(Long id){
         if(carRepository.existsById(id)) {
             carRepository.deleteById(id);
@@ -82,6 +90,8 @@ public class CarService implements CarServiceInterface {
         return "Delete Fail. No Such id found!!";
     }
 
+
+//    * Updaing car details by providing car Id and carRequest object;
     public ResponseEntity<Object> updateById(Long id, CarRequest carDetails) {
         Optional<Car> car = carRepository.findById(id);
         if (car.isPresent()) {
@@ -101,6 +111,8 @@ public class CarService implements CarServiceInterface {
         }
     }
 
+//    *searching a specific car by car name;
+
     public ResponseEntity<Object> searchByCarName( String carName){
          Optional<Object> car=carRepository.findByCarName(carName);
          if(car.isEmpty()){
@@ -109,6 +121,7 @@ public class CarService implements CarServiceInterface {
          return new ResponseEntity<>(car.get(),HttpStatus.OK);
     }
 
+    //    *searching a specific car by car category;
     public Iterable<Car> searchByCategory(String categoryName){
         Optional<Category> category=categoryRepository.findByCategoryName(categoryName);
         Iterable<Car> cars=carRepository.findByCategoryId(category.get().getId());

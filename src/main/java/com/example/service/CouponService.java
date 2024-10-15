@@ -18,6 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
+//! All operation related to Coupon service is done
+
+
 @Service
 public class CouponService implements CouponServiceInterface {
     @Autowired
@@ -26,6 +30,8 @@ public class CouponService implements CouponServiceInterface {
     @Autowired
     private CustomerRepository customerRepository;
 
+
+//    * adding new coupon to space by providing CouponResquestToAdd object
     public ResponseEntity<Object> addCoupon(CouponResquestToAdd coupon){
         Optional<Coupon> isCouponPresent=couponRepository.findByName(coupon.getCouponName());
         if(isCouponPresent.isPresent()){
@@ -38,10 +44,12 @@ public class CouponService implements CouponServiceInterface {
         return new ResponseEntity<>(addedCoupon,HttpStatus.OK);
     }
 
+//    * fetching all coupon from DB to show
     public Iterable<Coupon> allCoupon(){
         return couponRepository.findAll();
     }
 
+//    * deleting coupon from DB by providing Coupon ID
     public String deleteById(Long id){
         if(couponRepository.existsById(id)) {
             couponRepository.deleteById(id);
@@ -50,6 +58,7 @@ public class CouponService implements CouponServiceInterface {
         return "Delete Fail. No Such id found!!";
     }
 
+//    * updating coupon by providing coupon id,CouponResquestToAdd object which need to update
     public ResponseEntity<Object> updateById(Long id, CouponResquestToAdd coupon) {
         String couponName= coupon.getCouponName();
         Optional<Coupon> checkingCouponAllreadyPresent=couponRepository.findByName(couponName);
@@ -68,6 +77,7 @@ public class CouponService implements CouponServiceInterface {
         }
     }
 
+//    *Finding coupon which a customer can used by providing customer ID and number of days for rent a car
     public ResponseEntity<List<Object>> findCouponForCustomer(Long id, int days ){
         List<Object> coupons = new ArrayList<>();
         if(days>30) {

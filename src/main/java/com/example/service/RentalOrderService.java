@@ -22,6 +22,8 @@ import java.util.Optional;
 
 @Service
 
+//! All operation related to rental order service is done
+
 public class RentalOrderService implements RentalOrderServiceImterface {
     @Autowired
     private RentalOrderRepository rentalOrderRepository;
@@ -32,6 +34,7 @@ public class RentalOrderService implements RentalOrderServiceImterface {
     @Autowired
     private CouponRepository couponRepository;
 
+    //! order placed by customer by providing RequsetRentalOrder  object
     @Transactional
     public ResponseEntity<Object> placeRentalOrder(RequsetRentalOrder request) {
         String customerName=request.getCustomerName();
@@ -41,9 +44,8 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         String carCategoryName=request.getCarCategoryName();
         String customerEmail=request.getCustomerEmail();
 
-        // Fetch customer
+//        !fetch customer with name and its email id.
         Optional<Customer> currCustomer=customerRepository.findByNameAndEmail(customerName,customerEmail);
-//        System.out.println(currCustomer.get());
         if(currCustomer.isEmpty() || !Objects.equals(currCustomer.get().getEmail(), customerEmail)){
             return new ResponseEntity<>("Sorry! Customer not found...",HttpStatus.NOT_FOUND);
         }
@@ -88,8 +90,9 @@ public class RentalOrderService implements RentalOrderServiceImterface {
             Double discountAmountAfterCouponApply = applyCouponDiscount(totalCost, coupons, noOfDaysForRent,couponApplied);
             totalCost-=discountAmountAfterCouponApply;
         }
+
+//        Making object of rentalOrder and updating its values in order to save in DB
         RentalOrder rentalOrder = new RentalOrder();
-//        car.get().setIsAvailable(false);
         car.get().setCountOfThatCar(car.get().getCountOfThatCar()-1);
         currCustomer.get().setFistTime(false);
         rentalOrder.setOrderTotal(totalCost);
@@ -101,6 +104,8 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         rentalOrderRepository.save(rentalOrder);
         return new ResponseEntity<>(rentalOrder,HttpStatus.OK);
     }
+
+//    * finding discount amount after applying coupon  on the bases of number of rental order days
     private double applyCouponDiscount(double totalCost, List<Coupon> coupons, int rentalDays,List<Coupon> appliedCoupons) {
         double discount = 0;
         Coupon appliedCoupon=null;
@@ -131,10 +136,13 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         appliedCoupons.add(appliedCoupon);
         return discount;
     }
+
+//    * Fucntion to find all rental order in the DB
     public Iterable<RentalOrder> allRentralOrder() {
         return rentalOrderRepository.findAll();
     }
 
+//    * Deleting rental order from DB by providing rental order ID;
     public String deleteById(Long id) {
         if (rentalOrderRepository.existsById(id)) {
             rentalOrderRepository.deleteById(id);
@@ -143,6 +151,7 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         return "Delete Fail. No Such id found!!";
     }
 
+//    * Fetching rental order for a particular customer by providing customer ID;
     public List<RentalOrder> allRentalOrderForParticularCustomer(Long id){
         Optional<Customer> customer=customerRepository.findById(id);
         List<RentalOrder> allOrder=rentalOrderRepository.findByCustomerId(customer.get().getId());

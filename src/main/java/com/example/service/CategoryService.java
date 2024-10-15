@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-
+//! All operation related to category service is done
 @Service
 public class CategoryService implements CategoryServiceInterface {
     @Autowired
     private CategoryRepository categoryRepository;
+
+//    * adding new category in DB by providing CategoryRequest object
     public ResponseEntity<Object> addCategory(CategoryRequest request){
         String categoryName= request.getCategoryName();
         Optional<Category> category=categoryRepository.findByCategoryName(categoryName);
@@ -29,11 +31,12 @@ public class CategoryService implements CategoryServiceInterface {
         categoryRepository.save(newCategory);
         return new ResponseEntity<>(newCategory,HttpStatus.OK);
     }
-
+//* fetching all category in the space;
     public Iterable<Category> allCategory(){
         return categoryRepository.findAll();
     }
 
+//    * deleting coupon from space by providing its Id, if it is not in used;
     public String deleteById(Long id){
         if(categoryRepository.existsById(id)) {
             categoryRepository.deleteById(id);
@@ -42,6 +45,8 @@ public class CategoryService implements CategoryServiceInterface {
         return "Delete Fail. No Such id found!!";
     }
 
+
+//    * updating category by providing category ID and CategoryRequest object;
     public ResponseEntity<Object> updateById(Long id, CategoryRequest categoryDetails) {
         String categoryName= categoryDetails.getCategoryName();
         Optional<Category> optionalCategory = categoryRepository.findById(id);
