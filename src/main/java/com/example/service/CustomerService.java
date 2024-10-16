@@ -25,7 +25,7 @@ public class CustomerService implements CustomerServiceInterface {
         Optional<Customer> currCustomer=customerRepository.findByName(customer.getName());
         if(currCustomer.isPresent() && Objects.equals(currCustomer.get().getName(), customer.getName())
                 && Objects.equals(currCustomer.get().getEmail(), customer.getEmail())){
-            return new ResponseEntity<>("Customer with name:"+currCustomer.get().getName()+" and email:-"+customer.getEmail()+" is already Present!!!",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Customer with name:"+currCustomer.get().getName()+" and email:-"+customer.getEmail()+" is already Present!!!",HttpStatus.CONFLICT);
         }
         Customer newCustomer=new Customer();
         newCustomer.setFistTime(true);

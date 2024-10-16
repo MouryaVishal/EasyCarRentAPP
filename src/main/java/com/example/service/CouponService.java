@@ -35,7 +35,7 @@ public class CouponService implements CouponServiceInterface {
     public ResponseEntity<Object> addCoupon(CouponResquestToAdd coupon){
         Optional<Coupon> isCouponPresent=couponRepository.findByName(coupon.getCouponName());
         if(isCouponPresent.isPresent()){
-            return  new ResponseEntity<>("Sorry! Coupon with name:"+coupon.getCouponName()+" already present!!",HttpStatus.NOT_FOUND);
+            return  new ResponseEntity<>("Sorry! Coupon with name:"+coupon.getCouponName()+" already present!!",HttpStatus.CONFLICT);
         }
         Coupon addedCoupon=new Coupon();
         addedCoupon.setName(coupon.getCouponName());
@@ -63,7 +63,7 @@ public class CouponService implements CouponServiceInterface {
         String couponName= coupon.getCouponName();
         Optional<Coupon> checkingCouponAllreadyPresent=couponRepository.findByName(couponName);
         if(checkingCouponAllreadyPresent.isPresent()){
-            return new ResponseEntity<>(couponName+" is ready present in Space...", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(couponName+" is ready present in Space...", HttpStatus.CONFLICT);
         }
         Optional<Coupon> updateCoupon = couponRepository.findById(id);
         if (updateCoupon.isPresent()) {

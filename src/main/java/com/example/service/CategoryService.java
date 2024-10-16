@@ -53,7 +53,7 @@ public class CategoryService implements CategoryServiceInterface {
         if (optionalCategory.isPresent()) {
             Optional<Category> checkingCategoryPresent=categoryRepository.findByCategoryName(categoryName);
             if(checkingCategoryPresent.isPresent()){
-                return new ResponseEntity<>(categoryName+" is already present in the space...",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(categoryName+" is already present in the space...",HttpStatus.CONFLICT);
             }
             optionalCategory.get().setCategoryName(categoryName);
             categoryRepository.save(optionalCategory.get());

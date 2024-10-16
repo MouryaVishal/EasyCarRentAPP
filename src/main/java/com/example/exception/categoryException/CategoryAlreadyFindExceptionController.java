@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CategoryAlreadyFindExceptionController {
     @ExceptionHandler(value = com.example.exception.categoryException.CategoryAlreadyFoundException.class)
     public ResponseEntity<Object> exception(com.example.exception.categoryException.CategoryAlreadyFoundException exception) {
-        return new ResponseEntity<>(exception.getMsg()+" ctegory is already present in the space....", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(exception.getMsg()+" ctegory is already present in the space....", HttpStatus.CONFLICT);
     }
 }

@@ -64,7 +64,7 @@ public class RentalOrderService implements RentalOrderServiceImterface {
         List<Coupon> coupons = new ArrayList<>();
         for(String couponName:couponNames){
             if(Objects.equals(couponName, "string"))continue;
-            System.out.println("Coupon");
+//            System.out.println("Coupon");
 
             Optional<Coupon> coupon=couponRepository.findByName(couponName);
             if(coupon.isEmpty()){

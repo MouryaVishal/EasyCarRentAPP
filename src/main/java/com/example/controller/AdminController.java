@@ -32,7 +32,8 @@ public class AdminController {
 
     @PostMapping("/addcategory")
     public ResponseEntity<Object> addCategory(@RequestBody CategoryRequest request){
-        return categoryService.addCategory(request);
+        ResponseEntity<Object>newCategory= categoryService.addCategory(request);
+        return ResponseEntity.ok(newCategory);
     }
     @GetMapping("/allcategory")
     public ResponseEntity<Iterable<Category>> allCategory(){
@@ -46,7 +47,8 @@ public class AdminController {
     }
     @PutMapping("/updateCategory/{id}")
     public ResponseEntity<Object> updateCategory(@PathVariable Long id,@RequestBody CategoryRequest category){
-        return categoryService.updateById(id,category);
+        ResponseEntity<Object> updatedCategory= categoryService.updateById(id,category);
+        return ResponseEntity.ok(updatedCategory);
     }
 
 
@@ -54,23 +56,26 @@ public class AdminController {
 //    *Api related to Category like addcar,delete,update...
     @PostMapping("/addcar")
     public ResponseEntity<Object> addCar(@RequestBody CarRequest car){
-        return carService.addCar(car);
+        ResponseEntity<Object> newcar= carService.addCar(car);
+        return  ResponseEntity.ok(newcar);
     }
 
     @PostMapping("/increasecarcount/{id}/{byNum}")
     public ResponseEntity<Object> increseCountOfCarWithCategory(@PathVariable Long id,@PathVariable int byNum){
-        return carService.increseCountOfCar(id,byNum);
+        ResponseEntity<Object> updatecar=carService.increseCountOfCar(id,byNum);
+        return ResponseEntity.ok(updatecar);
     }
 
     @PostMapping("/increasecarcountbyname/{name}/{byNum}")
     public ResponseEntity<Object> increseCountOfCarWithName(@PathVariable String name,@PathVariable int byNum){
-        return carService.increseCountOfCarByName(name,byNum);
+        ResponseEntity<Object> updatecar= carService.increseCountOfCarByName(name,byNum);
+        return ResponseEntity.ok(updatecar);
     }
 
     @GetMapping("/allcars")
     public ResponseEntity<Iterable<Car>> allCar(){
         Iterable<Car> cars=carService.allcars();
-            return ResponseEntity.ok(cars);
+        return ResponseEntity.ok(cars);
     }
 
     @DeleteMapping ("/deletecar/{id}")
@@ -80,7 +85,8 @@ public class AdminController {
     }
     @PutMapping("/updatecar/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable Long id,@RequestBody CarRequest car){
-        return carService.updateById(id,car);
+        ResponseEntity<Object> updateNewCar= carService.updateById(id,car);
+        return ResponseEntity.ok(updateNewCar);
     }
 
 
@@ -105,7 +111,8 @@ public class AdminController {
     }
     @PutMapping("/updatecoupon/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable Long id,@RequestBody CouponResquestToAdd coupon){
-        return couponService.updateById(id,coupon);
+        ResponseEntity<Object> updatedCoupon= couponService.updateById(id,coupon);
+        return ResponseEntity.ok(updatedCoupon);
     }
 
 
@@ -115,6 +122,8 @@ public class AdminController {
         Iterable<Customer> customers=customerService.allCustomer();
         return ResponseEntity.ok(customers);
     }
+
+
 
 //    ! Rental order API
     @GetMapping("/allrentalorder")

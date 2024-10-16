@@ -17,7 +17,7 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    //Get all Cars
+    //* Get all Cars
     @GetMapping("/allcars")
     public ResponseEntity<Iterable<Car>> allCar(){
         Iterable<Car> cars=carService.allcars();
@@ -31,7 +31,7 @@ public class CarController {
         return ResponseEntity.ok(cars);
     }
 
-    //search a specific car
+    //* search a specific car
     @GetMapping("/{name}")
     public ResponseEntity<Object> searchByCarName(@PathVariable String name){
         return  carService.searchByCarName(name);

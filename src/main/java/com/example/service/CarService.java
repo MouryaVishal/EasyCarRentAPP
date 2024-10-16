@@ -38,7 +38,7 @@ public class CarService implements CarServiceInterface {
             Optional<Category> category=categoryRepository.findByCategoryName(carCategoryName);
             if(category.isEmpty()){
                 return new ResponseEntity<>("Car name:"+name+" with category:"+
-                        carCategoryName+" is not provided by Company...",HttpStatus.NOT_FOUND);
+                        carCategoryName+" is not provided by Company...",HttpStatus.CONFLICT);
             }
             newCar.setCategoryId(category.get());
             newCar.setCountOfThatCar(countOfThatCar);
@@ -47,7 +47,7 @@ public class CarService implements CarServiceInterface {
             return new ResponseEntity<>(newCar,HttpStatus.OK);
         }
         return new ResponseEntity<>("Car name:"+name+" with category:"+
-                carCategoryName+" is already present...",HttpStatus.NOT_FOUND);
+                carCategoryName+" is already present...",HttpStatus.CONFLICT);
     }
 
 //    *increasing count of particular car in space by providing car Id and number of instance to increase
@@ -98,7 +98,7 @@ public class CarService implements CarServiceInterface {
             car.get().setName(carDetails.getName());
             Optional<Category> category=categoryRepository.findByCategoryName(carDetails.getCarCategoryName());
             if(category.isEmpty()){
-                return new ResponseEntity<>("Category with name:"+carDetails.getCarCategoryName()+" is not provide by Company",HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Category with name:"+carDetails.getCarCategoryName()+" is not provide by Company",HttpStatus.CONFLICT);
             }
             car.get().setCategoryId(category.get());
             car.get().setPricePerDay(carDetails.getPricePerDay());

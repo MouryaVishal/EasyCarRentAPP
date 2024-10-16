@@ -25,11 +25,12 @@ public class CustomerController {
     @Autowired
     private CarService carService;
 
-
+//  ! API related to customer
 //    For customer
     @PostMapping("/registercustomer")
-    public ResponseEntity<Object> addCoupon(@RequestBody CustomerResquestToRegister customer){
-        return customerService.addCustomer(customer);
+    public ResponseEntity<Object> addCustomer(@RequestBody CustomerResquestToRegister customer){
+        ResponseEntity<Object> newCustomer= customerService.addCustomer(customer);
+        return ResponseEntity.ok(newCustomer);
     }
 
     @DeleteMapping ("/deletecustomer/{id}")
@@ -39,14 +40,18 @@ public class CustomerController {
     }
     @PutMapping("/updatecustomer/{id}")
     public ResponseEntity<Object> updateCar(@PathVariable Long id,@RequestBody CustomerResquestToRegister customer){
-        return customerService.updateById(id,customer);
+        ResponseEntity<Object> updatedCustomer= customerService.updateById(id,customer);
+        return ResponseEntity.ok(updatedCustomer);
+
     }
 
 
+//    ! API related to rental order
 //    For RentralOrder;
     @PostMapping("/placeOrder")
     public ResponseEntity<Object> placeOrder(@RequestBody RequsetRentalOrder requsetRentalOrder){
-        return rentalOrderService.placeRentalOrder(requsetRentalOrder);
+        ResponseEntity<Object> placedOrderDetails= rentalOrderService.placeRentalOrder(requsetRentalOrder);
+        return ResponseEntity.ok(placedOrderDetails);
     }
 
     @GetMapping("/allrentalorder/{id}")
@@ -60,6 +65,8 @@ public class CustomerController {
         return ResponseEntity.ok(responseStr);
     }
 
+
+//    ! API related to car
 //    View All cars
     @GetMapping("/allCars")
     public ResponseEntity<Iterable<Car>> allCar(){
@@ -75,6 +82,7 @@ public class CustomerController {
 
     @GetMapping("/specificcar/{carName}")
     public ResponseEntity<Object> specificCar(@PathVariable String carName) {
-        return carService.searchByCarName(carName);
+        ResponseEntity<Object> searchedCar= carService.searchByCarName(carName);
+        return ResponseEntity.ok(searchedCar);
     }
 }
